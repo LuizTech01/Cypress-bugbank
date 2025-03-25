@@ -20,7 +20,7 @@ NPM ou Yarn (gerenciador de pacotes)
 #### Passos para configurar o projeto localmente:
 
 Clone o repositório:<br>
-git clone https://github.com/seu-usuario/nome-do-repositorio.git
+git clone https://github.com/LuizTech01/Cypress-bugbank.git
 
 Navegue até o diretório do projeto:<br>
 cd nome-do-repositorio
