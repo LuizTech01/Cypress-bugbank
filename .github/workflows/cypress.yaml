@@ -1,12 +1,30 @@
 name: End-to-end tests
-on: push
+
+on:
+  push:
+    branches:
+      - dev  # ou a branch que você usa
+  pull_request:
+    branches:
+      - dev
+
 jobs:
   cypress-run:
     runs-on: ubuntu-24.04
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      # Install npm dependencies, cache them correctly
-      # and run all Cypress tests
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'  # A versão do Node.js que você usa no seu projeto
+
+      - name: Install dependencies
+        run: npm install  # Certifique-se de que o package-lock.json está presente
+
       - name: Cypress run
         uses: cypress-io/github-action@v6
+        with:
+          start: npm start  # Caso você tenha um servidor local que precisa iniciar
