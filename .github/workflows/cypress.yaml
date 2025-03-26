@@ -19,12 +19,14 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '16'  # A versão do Node.js que você usa no seu projeto
+          node-version: '16'
+
+      # Se o package.json está em uma subpasta, navegue até ela
+      - name: Navigate to project directory
+        run: cd Cypress-bugbank  # Caso o 'package.json' esteja dentro da pasta Cypress-bugbank
 
       - name: Install dependencies
-        run: npm install  # Certifique-se de que o package-lock.json está presente
+        run: npm install
 
       - name: Cypress run
         uses: cypress-io/github-action@v6
-        with:
-          start: npm start  # Caso você tenha um servidor local que precisa iniciar
