@@ -3,10 +3,10 @@ name: Cypress Tests with Qase.io
 on:
   push:
     branches:
-      - main  # ou a branch que você usar
+      - dev  # ou a branch que você usar
   pull_request:
     branches:
-      - main
+      - dev
 
 jobs:
   cypress-run:
