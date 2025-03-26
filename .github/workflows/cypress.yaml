@@ -3,7 +3,7 @@ name: Cypress Tests with Qase.io
 on:
   push:
     branches:
-      - dev  # ou a branch que você usar
+      - dev  # ou a branch que você usa
   pull_request:
     branches:
       - dev
@@ -19,21 +19,13 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '22.12.0'
+          node-version: '16'  # Certifique-se de que a versão é compatível com seu projeto
 
       - name: Install dependencies
-        run: |
-          npm install
-        continue-on-error: false # Vai parar o workflow se essa etapa falhar
+        run: npm install
 
-      - name: Verify npm version and dependencies
-        run: |
-          npm --version
-          ls -l # Verifique os arquivos no diretório
-          
       - name: Run Cypress Tests
         env:
           QASE_API_TOKEN: ${{ secrets.QASE_API_TOKEN }}  # Token do Qase, armazenado nos secrets do GitHub
           QASE_PROJECT_CODE: ${{ secrets.QASE_PROJECT_CODE }}  # Código do projeto no Qase.io, também armazenado nos secrets do GitHub
-        run: |
-          npx cypress run
+        run: npx cypress run
