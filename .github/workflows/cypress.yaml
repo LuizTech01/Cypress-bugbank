@@ -24,15 +24,15 @@ jobs:
 
       - name: Install Cypress binary
         run: |
-          npm install cypress
-          
+          npx cypress install  # Baixa o binário do Cypress
+
       - name: Grant execute permissions to Cypress binary
         run: |
-          chmod -R 777 ./node_modules/cypress
+          chmod -R 777 ./node_modules/cypress  # Concede permissões ao binário do Cypress
 
       - name: Run Cypress tests
         env:
           QASE_API_TOKEN: ${{ secrets.QASE_API_TOKEN }}
           QASE_PROJECT_CODE: ${{ secrets.QASE_PROJECT_CODE }}
         run: |
-          npx cypress run
+          npx cypress run  # Executa os testes do Cypress
