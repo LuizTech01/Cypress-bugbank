@@ -1,31 +1,12 @@
-name: Cypress Tests with Qase.io
-
-on:
-  push:
-    branches:
-      - dev  # ou a branch que você usa
-  pull_request:
-    branches:
-      - dev
-
+name: End-to-end tests
+on: push
 jobs:
   cypress-run:
-    runs-on: ubuntu-latest
-
+    runs-on: ubuntu-24.04
     steps:
-      - name: Check out code
-        uses: actions/checkout@v2
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '16'  # Certifique-se de que a versão é compatível com seu projeto
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Run Cypress Tests
-        env:
-          QASE_API_TOKEN: ${{ secrets.QASE_API_TOKEN }}  # Token do Qase, armazenado nos secrets do GitHub
-          QASE_PROJECT_CODE: ${{ secrets.QASE_PROJECT_CODE }}  # Código do projeto no Qase.io, também armazenado nos secrets do GitHub
-        run: npx cypress run
+      - name: Checkout
+        uses: actions/checkout@v4
+      # Install npm dependencies, cache them correctly
+      # and run all Cypress tests
+      - name: Cypress run
+        uses: cypress-io/github-action@v6
