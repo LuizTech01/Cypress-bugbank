@@ -22,13 +22,10 @@ jobs:
         run: |
           npm install
 
-      - name: Install Cypress binary
-        run: |
-          npx cypress install
-
       - name: Grant execute permissions to Cypress binary
         run: |
-          chmod +x ./node_modules/.bin/cypress
+          chmod -R 777 ./node_modules/.bin/cypress
+          chmod -R 777 ./node_modules/cypress
 
       - name: Run Cypress tests
         env:
