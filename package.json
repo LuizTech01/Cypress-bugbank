@@ -2188,8 +2188,5 @@
         "fd-slicer": "~1.1.0"
       }
     }
-  },
-  "devDependencies": {
-    "cypress-qase-reporter": "^2.2.10"
   }
 }
