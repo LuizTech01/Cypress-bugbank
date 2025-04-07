@@ -19,14 +19,9 @@ steps:
 
 - script: |
     npx cypress install --no-progress
-  displayName: 'Instalar Cypress (com cache customizado)'
+    chmod +x $(npm bin)/cypress
+  displayName: 'Instalar Cypress e corrigir permissões'
 
 - script: |
     npx cypress run
   displayName: 'Executar testes Cypress'
-
-- task: PublishTestResults@2
-  condition: succeededOrFailed()
-  inputs:
-    testResultsFiles: '**/cypress/results/*.xml'
-    testRunTitle: 'Resultados dos testes Cypress'
