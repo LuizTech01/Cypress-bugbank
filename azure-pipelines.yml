@@ -6,23 +6,17 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
-variables:
-  CYPRESS_CACHE_FOLDER: $(Pipeline.Workspace)/.cache/Cypress
-
 steps:
   - task: NodeTool@0
     inputs:
       versionSpec: '18.x'
     displayName: 'Instala Node.js'
 
-  - script: |
-      npm ci
+  - script: npm ci
     displayName: 'Instala dependências'
 
-  - script: |
-      npx cypress install
-    displayName: 'Instala o Cypress'
+  - script: npx cypress install
+    displayName: 'Instala Cypress (binário)'
 
-  - script: |
-      npx cypress run
+  - script: npx cypress run
     displayName: 'Executa os testes Cypress'
