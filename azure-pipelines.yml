@@ -4,7 +4,16 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
+variables:
+  CYPRESS_CACHE_FOLDER: $(Pipeline.Workspace)/.cache/Cypress
+
 steps:
+- task: Cache@2
+  inputs:
+    key: 'cypress-cache'
+    path: $(CYPRESS_CACHE_FOLDER)
+  displayName: 'Restaurar cache do Cypress'
+
 - task: NodeTool@0
   inputs:
     versionSpec: '18.x'
@@ -12,10 +21,16 @@ steps:
 
 - script: |
     npm install
-    npx cypress install --no-progress
+    npx cypress install
     chmod +x node_modules/.bin/cypress
-  displayName: 'Instalar dependências e corrigir permissão do Cypress'
+  displayName: 'Instalar dependências e Cypress'
 
 - script: |
     npx cypress run
   displayName: 'Executar testes Cypress'
+
+- task: PublishTestResults@2
+  condition: succeededOrFailed()
+  inputs:
+    testResultsFiles: '**/cypress/results/*.xml'
+    testRunTitle: 'Resultados dos testes Cypress'
