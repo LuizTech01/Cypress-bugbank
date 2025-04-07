@@ -4,6 +4,9 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
+variables:
+  CYPRESS_CACHE_FOLDER: $(Pipeline.Workspace)/.cache/Cypress
+
 steps:
 - task: NodeTool@0
   inputs:
@@ -15,8 +18,8 @@ steps:
   displayName: 'Instalar dependências'
 
 - script: |
-    npx cypress install
-  displayName: 'Instalar Cypress (download do binário)'
+    npx cypress install --no-progress
+  displayName: 'Instalar Cypress (com cache customizado)'
 
 - script: |
     npx cypress run
