@@ -15,7 +15,6 @@ steps:
   displayName: 'Instalar dependências'
 
 - script: |
-    cd cypress-bugbank
     npx cypress install
   displayName: 'Instalar Cypress (download do binário)'
 
