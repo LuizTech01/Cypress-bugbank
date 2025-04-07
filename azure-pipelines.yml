@@ -1,43 +1,23 @@
 trigger:
-  - dev
+- dev
 
 pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-  - task: NodeTool@0
-    inputs:
-      versionSpec: '18.x'
-    displayName: 'Instalar Node.js'
+- task: NodeTool@0
+  inputs:
+    versionSpec: '18.x'
+  displayName: 'Instalar Node.js'
 
-  - task: Cache@2
-    inputs:
-      key: 'cypress-cache-$(Agent.OS)-package-lock-$(Build.SourceVersion)'
-      path: $(HOME)/.cache/Cypress
-    displayName: 'Cache do Cypress'
+- script: |
+    npm ci
+  displayName: 'Instalar dependências'
 
-  - script: |
-      npm ci
-    displayName: 'Instalar dependências'
+- script: |
+    npx cypress install
+  displayName: 'Instalar Cypress (binário)'
 
-  - script: |
-      npx cypress install
-    displayName: 'Instalar binário do Cypress'
-
-  - script: |
-      npx cypress run
-    displayName: 'Executar testes Cypress com Cucumber'
-
-  - task: PublishBuildArtifacts@1
-    condition: failed()
-    inputs:
-      pathToPublish: cypress/videos
-      artifactName: cypress-videos
-      publishLocation: Container
-
-  - task: PublishBuildArtifacts@1
-    condition: failed()
-    inputs:
-      pathToPublish: cypress/screenshots
-      artifactName: cypress-screenshots
-      publishLocation: Container
+- script: |
+    npx cypress run --browser electron
+  displayName: 'Executar testes Cypress com Cucumber'
