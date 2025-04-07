@@ -28,12 +28,6 @@ steps:
       npx cypress run
     displayName: 'Executar testes Cypress com Cucumber'
 
-  - task: PublishTestResults@2
-    condition: succeededOrFailed()
-    inputs:
-      testResultsFiles: '**/cypress/results/*.xml'
-      testRunTitle: 'Resultados dos testes Cypress'
-
   - task: PublishBuildArtifacts@1
     condition: failed()
     inputs:
