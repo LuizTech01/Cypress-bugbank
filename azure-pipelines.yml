@@ -4,9 +4,6 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
-variables:
-  CYPRESS_CACHE_FOLDER: $(Pipeline.Workspace)/.cache/Cypress
-
 steps:
 - task: NodeTool@0
   inputs:
@@ -15,12 +12,9 @@ steps:
 
 - script: |
     npm install
-  displayName: 'Instalar dependências'
-
-- script: |
     npx cypress install --no-progress
-    chmod +x $(npm bin)/cypress
-  displayName: 'Instalar Cypress e corrigir permissões'
+    chmod +x node_modules/.bin/cypress
+  displayName: 'Instalar dependências e corrigir permissão do Cypress'
 
 - script: |
     npx cypress run
