@@ -1,23 +1,25 @@
 trigger:
-  - dev
+- dev
 
 pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-  - task: NodeTool@0
-    inputs:
-      versionSpec: '20.x'
-    displayName: 'Instalar Node.js'
+- task: NodeTool@0
+  inputs:
+    versionSpec: '18.x'
+  displayName: 'Instalar Node.js'
 
-  - script: |
-      npm install
-    displayName: 'Instalar dependências'
+- script: |
+    npm install
+  displayName: 'Instalar dependências'
 
-  - script: |
-      npx cypress install
-    displayName: 'Instalar Cypress'
+- script: |
+    npx cypress run
+  displayName: 'Executar testes Cypress'
 
-  - script: |
-      npx cypress run
-    displayName: 'Executar testes Cypress'
+- task: PublishTestResults@2
+  condition: succeededOrFailed()
+  inputs:
+    testResultsFiles: '**/cypress/results/*.xml'
+    testRunTitle: 'Resultados dos testes Cypress'
