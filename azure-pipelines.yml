@@ -1,0 +1,23 @@
+trigger:
+  - dev
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '20.x'
+    displayName: 'Instalar Node.js'
+
+  - script: |
+      npm install
+    displayName: 'Instalar dependências'
+
+  - script: |
+      npx cypress install
+    displayName: 'Instalar Cypress'
+
+  - script: |
+      npx cypress run
+    displayName: 'Executar testes Cypress'
