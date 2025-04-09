@@ -2,21 +2,33 @@ trigger:
   branches:
     include:
       - dev
-
+      
 pool:
   vmImage: 'ubuntu-latest'
 
-steps:
-  - task: NodeTool@0
-    inputs:
-      versionSpec: '18.x'
-    displayName: 'Instala Node.js'
+stages:
+  - stage: InstallDependencies
+    displayName: 'Instalação'
+    jobs:
+      - job: Install
+        steps:
+          - task: NodeTool@0
+            inputs:
+              versionSpec: '18.x'
+            displayName: 'Instala Node.js'
 
-  - script: npm ci
-    displayName: 'Instala dependências'
+          - script: npm ci
+            displayName: 'Instala dependências'
 
-  - script: npx cypress install
-    displayName: 'Instala Cypress (binário)'
+          - script: npx cypress install
+            displayName: 'Instala Cypress (binário)'
 
-  - script: npx cypress run
-    displayName: 'Executa os testes Cypress'
+  - stage: Test
+    displayName: 'Testes Automatizados'
+    dependsOn: InstallDependencies
+    condition: succeeded() # Só executa se o stage anterior teve sucesso
+    jobs:
+      - job: RunCypress
+        steps:
+          - script: npx cypress run
+            displayName: 'Executa os testes Cypress'
